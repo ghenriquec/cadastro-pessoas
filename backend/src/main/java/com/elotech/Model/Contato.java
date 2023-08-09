@@ -38,5 +38,5 @@ public class Contato {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id", nullable = false)
-    private Pessoa pessoas;
+    private Pessoa pessoa;
 }

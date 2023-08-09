@@ -34,7 +34,7 @@ public class Pessoa {
     @Past(message = "Data de nascimento não pode ser uma data futura.")
     private LocalDate data_nascimento;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pessoas")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pessoa")
     private Set<Contato> contatos = new HashSet<>();
 
     public Set<Contato> getContatos() {
