@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function PessoaEdit() {
     const { id } = useParams();
-    const [pessoa, setPessoa] = useState({ nome: '', cpf: '', dataNascimento: '', contatos: [{ nome: '', telefone: '', email: '' }] });
+    const [pessoa, setPessoa] = useState({ nome: '', cpf: '', data_nascimento: '', contatos: [{ nome: '', telefone: '', email: '' }] });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -75,11 +75,11 @@ function PessoaEdit() {
                 <Grid item xs={12}>
                     <TextField
                         fullWidth
-                        name="dataNascimento"
+                        name="data_nascimento"
                         label="Data de Nascimento"
                         type="date"
                         variant="outlined"
-                        value={pessoa.dataNascimento}
+                        value={pessoa.data_nascimento}
                         InputLabelProps={{
                             shrink: true,
                         }}

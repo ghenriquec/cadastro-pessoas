@@ -35,7 +35,7 @@ function PessoaAdd() {
     const [pessoa, setPessoa] = useState({
         nome: '',
         cpf: '',
-        dataNascimento: '',
+        data_nascimento: '',
         contatos: [{ nome: '', telefone: '', email: '' }]
     });
 
@@ -108,11 +108,11 @@ function PessoaAdd() {
                 <Grid item xs={12}>
                     <TextField
                         fullWidth
-                        name="dataNascimento"
+                        name="data_nascimento"
                         label="Data de Nascimento"
                         type="date"
                         variant="outlined"
-                        value={pessoa.dataNascimento}
+                        value={pessoa.data_nascimento}
                         InputLabelProps={{ shrink: true }}
                         onChange={handleInputChange}
                         required
