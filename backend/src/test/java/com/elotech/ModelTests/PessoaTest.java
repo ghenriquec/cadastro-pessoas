@@ -43,8 +43,8 @@ class PessoaTest {
     @Test
     void testDataNascimento() {
         LocalDate date = LocalDate.of(2004, 5, 5);
-        pessoa.setDataNascimento(date);
-        assertEquals(date, pessoa.getDataNascimento());
+        pessoa.setData_nascimento(date);
+        assertEquals(date, pessoa.getData_nascimento());
     }
 
     @Test
@@ -66,7 +66,7 @@ class PessoaTest {
         Pessoa novaPessoa = new Pessoa("Guilherme", "123.456.789-00", LocalDate.of(2004, 5, 5), contatos);
         assertEquals("Guilherme", novaPessoa.getNome());
         assertEquals("123.456.789-00", novaPessoa.getCpf());
-        assertEquals(LocalDate.of(2004, 5, 5), novaPessoa.getDataNascimento());
+        assertEquals(LocalDate.of(2004, 5, 5), novaPessoa.getData_nascimento());
         assertFalse(novaPessoa.getContatos().isEmpty());
     }
 }

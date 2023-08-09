@@ -4,6 +4,7 @@ import com.elotech.Validator.Documentos;
 import com.elotech.dto.PessoaDTO;
 import com.elotech.Exceptions.InvalidCpfException;
 import com.elotech.Exceptions.ValidationException;
+import com.elotech.Model.Contato;
 import com.elotech.Model.Pessoa;
 import com.elotech.Repositories.PessoaRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,33 +38,35 @@ public class PessoaService {
     }
 
     public Pessoa save(Pessoa pessoa) {
-        if (pessoa.getNome() == null || pessoa.getNome().trim().isEmpty() ||
-                pessoa.getCpf() == null || pessoa.getCpf().trim().isEmpty() ||
-                pessoa.getDataNascimento() == null ||
-                pessoa.getContatos() == null || pessoa.getContatos().isEmpty()) {
-            throw new ValidationException("Todos os campos são obrigatórios e uma pessoa deve possuir ao menos um contato.");
+        validarCamposObrigatorios(pessoa);
+        validarDataNascimento(pessoa);
+
+        for (Contato contato : pessoa.getContatos()) {
+            contato.setPessoas(pessoa);
         }
 
-        if (pessoa.getContatos().isEmpty()) {
-            throw new ValidationException("Uma pessoa deve possuir ao menos um contato.");
+        Pessoa savedPessoa = pessoaRepository.save(pessoa); 
+        return savedPessoa;
+    }
+
+    private void validarCamposObrigatorios(Pessoa pessoa) {
+        if (pessoa.getNome() == null || pessoa.getNome().trim().isEmpty()) {
+            throw new ValidationException("Nome é obrigatório.");
         }
 
-        String cpf = pessoa.getCpf().replaceAll("[^0-9]", ""); // Remove caracteres não numéricos do CPF
-
-        if (cpf.length() != 11) {
-            throw new InvalidCpfException("CPF deve conter exatamente 11 dígitos.");
+        if (pessoa.getCpf() == null || pessoa.getCpf().trim().isEmpty()) {
+            throw new ValidationException("CPF é obrigatório.");
         }
 
-        CPFValidator cpfValidator = new CPFValidator();
-        if (!Documentos.cpfValido(cpf)) {
-            throw new InvalidCpfException("CPF inválido.");
+        if (pessoa.getData_nascimento() == null) {
+            throw new ValidationException("Data de nascimento é obrigatória.");
         }
+    }
 
-        if (pessoa.getDataNascimento().isAfter(LocalDate.now())) {
+    private void validarDataNascimento(Pessoa pessoa) {
+        if (pessoa.getData_nascimento().isAfter(LocalDate.now())) {
             throw new ValidationException("A data de nascimento não pode ser uma data futura.");
         }
-
-        return pessoaRepository.save(pessoa);
     }
 
     public void deleteById(Long id) {
@@ -75,7 +78,7 @@ public class PessoaService {
         pessoaDTO.setId(pessoa.getId());
         pessoaDTO.setNome(pessoa.getNome());
         pessoaDTO.setCpf(pessoa.getCpf());
-        pessoaDTO.setDataNascimento(pessoa.getDataNascimento());
+        pessoaDTO.setData_nascimento(pessoa.getData_nascimento());
         pessoaDTO.setContatos(pessoa.getContatos().stream()
                 .map(contato -> contatoService.convertToDTO(contato))
                 .collect(Collectors.toList()));
@@ -87,7 +90,7 @@ public class PessoaService {
         pessoa.setId(pessoaDTO.getId());
         pessoa.setNome(pessoaDTO.getNome());
         pessoa.setCpf(pessoaDTO.getCpf());
-        pessoa.setDataNascimento(pessoaDTO.getDataNascimento());
+        pessoa.setData_nascimento(pessoaDTO.getData_nascimento());
         return pessoa;
     }
 }

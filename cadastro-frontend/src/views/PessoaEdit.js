@@ -4,17 +4,17 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function PessoaEdit() {
-    const [pessoa, setPessoa] = useState({ nome: '', cpf: '', dataNascimento: '', contatos: [] });
-    const history = useNavigate();
     const { id } = useParams();
+    const [pessoa, setPessoa] = useState({ nome: '', cpf: '', dataNascimento: '', contatos: [{ nome: '', telefone: '', email: '' }] });
+    const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`/api/pessoas/${id}`)
+        axios.get(`http://localhost:8080/api/pessoas/${id}`)
             .then(response => {
                 setPessoa(response.data);
             })
             .catch(error => {
-                console.error('Erro ao buscar pessoa:', error);
+                console.error("Erro ao buscar pessoa:", error);
             });
     }, [id]);
 
@@ -37,12 +37,13 @@ function PessoaEdit() {
     };
 
     const handleSubmit = () => {
-        axios.put(`/api/pessoas/${id}`, pessoa)
+        axios.put(`http://localhost:8080/api/pessoas/${id}`, pessoa)
             .then(response => {
-                history.push('/');
+                console.log('Pessoa atualizada com sucesso:', response.data);
+                navigate('/');
             })
             .catch(error => {
-                console.error('Erro ao editar pessoa:', error);
+                console.error('Erro ao atualizar pessoa:', error);
             });
     };
 
@@ -121,10 +122,10 @@ function PessoaEdit() {
                         </Grid>
                     </Grid>
                 ))}
-                
+
                 <Grid item xs={12}>
                     <Button variant="contained" color="primary" onClick={handleSubmit}>
-                        Salvar Edição
+                        Atualizar
                     </Button>
                 </Grid>
             </Grid>

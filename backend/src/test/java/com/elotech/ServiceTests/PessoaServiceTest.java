@@ -82,7 +82,7 @@ public class PessoaServiceTest {
         Pessoa pessoa = new Pessoa();
         pessoa.setNome("Test");
         pessoa.setCpf("12345678901");
-        pessoa.setDataNascimento(LocalDate.now().minusYears(10));
+        pessoa.setData_nascimento(LocalDate.now().minusYears(10));
 
         Contato contato = new Contato();
         contato.setNome("Contato 1");
@@ -100,7 +100,7 @@ public class PessoaServiceTest {
         Pessoa pessoa = new Pessoa();
         pessoa.setNome("Test");
         pessoa.setCpf("11144477735");
-        pessoa.setDataNascimento(LocalDate.now().minusYears(10));
+        pessoa.setData_nascimento(LocalDate.now().minusYears(10));
 
         Contato contato = new Contato();
         contato.setNome("Contato 1");

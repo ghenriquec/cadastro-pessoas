@@ -15,30 +15,38 @@ import java.util.List;
 @RequestMapping("api/pessoas")
 public class PessoaController {
 
+    private final PessoaService pessoaService;
+
     @Autowired
-    private PessoaService pessoaService;
+    public PessoaController(PessoaService pessoaService) {
+        this.pessoaService = pessoaService;
+    }
 
     @GetMapping
     public ResponseEntity<List<PessoaDTO>> getAllPessoas() {
-        return new ResponseEntity<>(pessoaService.getAll(), HttpStatus.OK);
+        List<PessoaDTO> pessoas = pessoaService.getAll();
+        return new ResponseEntity<>(pessoas, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Pessoa> getPessoaById(@PathVariable Long id) {
-        return new ResponseEntity<>(pessoaService.findById(id), HttpStatus.OK);
+        Pessoa pessoa = pessoaService.findById(id);
+        return new ResponseEntity<>(pessoa, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Pessoa> createPessoa(@Valid @RequestBody PessoaDTO pessoaDTO) {
-        Pessoa pessoa = pessoaService.convertToEntity(pessoaDTO);
-        return new ResponseEntity<>(pessoaService.save(pessoa), HttpStatus.CREATED);
+    Pessoa pessoa = pessoaService.convertToEntity(pessoaDTO);
+    Pessoa savedPessoa = pessoaService.save(pessoa);
+    return new ResponseEntity<>(savedPessoa, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Pessoa> updatePessoa(@PathVariable Long id, @Valid @RequestBody PessoaDTO pessoaDTO) {
         Pessoa pessoa = pessoaService.convertToEntity(pessoaDTO);
         pessoa.setId(id);
-        return new ResponseEntity<>(pessoaService.save(pessoa), HttpStatus.OK);
+        Pessoa updatedPessoa = pessoaService.save(pessoa);
+        return new ResponseEntity<>(updatedPessoa, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -32,19 +32,19 @@ public class Pessoa {
 
     @NotNull(message = "Data de nascimento é obrigatória.")
     @Past(message = "Data de nascimento não pode ser uma data futura.")
-    private LocalDate dataNascimento;
+    private LocalDate data_nascimento;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pessoa")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pessoas")
     private Set<Contato> contatos = new HashSet<>();
 
     public Set<Contato> getContatos() {
         return new HashSet<>(contatos);
     }
 
-    public Pessoa(String nome, String cpf, LocalDate dataNascimento, Set<Contato> contatos) {
+    public Pessoa(String nome, String cpf, LocalDate data_nascimento, Set<Contato> contatos) {
         this.nome = nome;
         this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
+        this.data_nascimento = data_nascimento;
         this.contatos = contatos != null ? new HashSet<>(contatos) : new HashSet<>();
     }
 }

@@ -8,7 +8,7 @@ public class PessoaDTO {
     private Long id;
     private String nome;
     private String cpf;
-    private LocalDate dataNascimento;
+    private LocalDate data_nascimento;
     private List<ContatoDTO> contatos;
 
     public PessoaDTO() {
@@ -38,12 +38,12 @@ public class PessoaDTO {
         this.cpf = cpf;
     }
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
+    public LocalDate getData_nascimento() {
+        return data_nascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setData_nascimento(LocalDate data_nascimento) {
+        this.data_nascimento = data_nascimento;
     }
 
     public List<ContatoDTO> getContatos() {

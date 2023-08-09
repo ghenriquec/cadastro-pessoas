@@ -12,12 +12,12 @@ public class ErrorResponse {
     public ErrorResponse() {}
 
     public ErrorResponse(HttpStatus status, String mensagem) {
-        this.status = status.value(); // Convertendo o HttpStatus para int
+        this.status = status.value();
         this.mensagem = mensagem;
     }
 
     public ErrorResponse(HttpStatus status, String mensagem, List<String> erros) {
-        this.status = status.value(); // Convertendo o HttpStatus para int
+        this.status = status.value();
         this.mensagem = mensagem;
         this.erros = erros;
     }
