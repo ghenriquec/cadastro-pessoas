@@ -21,6 +21,20 @@ public class GlobalExceptionHandler {
         return construirErrorResponse(new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage()));
     }
 
+    @ExceptionHandler(ContatoNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleContatoNotFound(ContatoNotFoundException ex) {
+        return construirErrorResponse(new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage()));
+    }
+
+    @ExceptionHandler({
+            InvalidCpfException.class,
+            ValidationException.class,
+            ContatoValidationException.class
+    })
+    public ResponseEntity<ErrorResponse> handleDomainValidation(RuntimeException ex) {
+        return construirErrorResponse(new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         List<String> erros = new ArrayList<>();
