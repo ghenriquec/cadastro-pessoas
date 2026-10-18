@@ -9,7 +9,6 @@ import com.elotech.Model.Pessoa;
 import com.elotech.Repositories.PessoaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -39,10 +38,13 @@ public class PessoaService {
 
     public Pessoa save(Pessoa pessoa) {
         validarCamposObrigatorios(pessoa);
+        if (!Documentos.cpfValido(pessoa.getCpf())) {
+            throw new InvalidCpfException();
+        }
         validarDataNascimento(pessoa);
 
         for (Contato contato : pessoa.getContatos()) {
-            contato.setPessoas(pessoa);
+            contato.setPessoa(pessoa);
         }
 
         Pessoa savedPessoa = pessoaRepository.save(pessoa); 
