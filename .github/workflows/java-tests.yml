@@ -3,7 +3,10 @@ name: Java backend tests
 on:
   push:
     branches:
-      - fix/people-registration-spring3-validation-2026
+      - main
+    paths:
+      - "backend/**"
+      - ".github/workflows/java-tests.yml"
   pull_request:
     paths:
       - "backend/**"
