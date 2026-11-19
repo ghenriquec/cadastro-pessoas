@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Grid, Paper } from '@material-ui/core';
 import axios from 'axios';
+import { API_URL } from '../service/api';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function PessoaEdit() {
@@ -9,7 +10,7 @@ function PessoaEdit() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/pessoas/${id}`)
+        axios.get(`${API_URL}/pessoas/${id}`)
             .then(response => {
                 setPessoa(response.data);
             })
@@ -37,7 +38,7 @@ function PessoaEdit() {
     };
 
     const handleSubmit = () => {
-        axios.put(`http://localhost:8080/api/pessoas/${id}`, pessoa)
+        axios.put(`${API_URL}/pessoas/${id}`, pessoa)
             .then(response => {
                 console.log('Pessoa atualizada com sucesso:', response.data);
                 navigate('/');

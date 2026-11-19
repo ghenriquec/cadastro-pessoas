@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../service/api';
 import {
     Button, TextField, Grid, Paper, makeStyles, IconButton
 } from '@material-ui/core';
@@ -62,7 +63,7 @@ function PessoaAdd() {
     };
 
     const handleSubmit = () => {
-        axios.post('http://localhost:8080/api/pessoas', pessoa)
+        axios.post(`${API_URL}/pessoas`, pessoa)
             .then(response => {
                 console.log('Pessoa adicionada com sucesso:', response.data);
                 navigate('/');
