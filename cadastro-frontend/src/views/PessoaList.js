@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../service/api';
 
 import { Button, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -11,7 +12,7 @@ function PessoaList() {
     const [pessoas, setPessoas] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/pessoas')
+        axios.get(`${API_URL}/pessoas`)
             .then(response => {
                 setPessoas(response.data);
             })
@@ -21,7 +22,7 @@ function PessoaList() {
     }, []);
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:8080/api/pessoas/${id}`)
+        axios.delete(`${API_URL}/pessoas/${id}`)
             .then(() => {
                 setPessoas(prevPessoas => prevPessoas.filter(pessoa => pessoa.id !== id));
             })

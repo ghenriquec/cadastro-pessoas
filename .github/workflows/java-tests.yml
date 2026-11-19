@@ -28,5 +28,6 @@ jobs:
           java-version: "17"
           cache: maven
           cache-dependency-path: backend/pom.xml
-      - name: Run backend unit tests
-        run: mvn --batch-mode --no-transfer-progress -f backend/pom.xml test
+      # Integration tests start PostgreSQL with Testcontainers, using the runner's Docker.
+      - name: Run backend unit and integration tests
+        run: mvn --batch-mode --no-transfer-progress -f backend/pom.xml verify

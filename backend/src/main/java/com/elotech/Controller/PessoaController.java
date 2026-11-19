@@ -1,14 +1,12 @@
 package com.elotech.Controller;
 
-import com.elotech.dto.PessoaDTO;
-import com.elotech.Model.Pessoa;
 import com.elotech.Service.PessoaService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.elotech.dto.PessoaDTO;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,41 +15,33 @@ public class PessoaController {
 
     private final PessoaService pessoaService;
 
-    @Autowired
     public PessoaController(PessoaService pessoaService) {
         this.pessoaService = pessoaService;
     }
 
     @GetMapping
-    public ResponseEntity<List<PessoaDTO>> getAllPessoas() {
-        List<PessoaDTO> pessoas = pessoaService.getAll();
-        return new ResponseEntity<>(pessoas, HttpStatus.OK);
+    public List<PessoaDTO> getAllPessoas() {
+        return pessoaService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pessoa> getPessoaById(@PathVariable Long id) {
-        Pessoa pessoa = pessoaService.findById(id);
-        return new ResponseEntity<>(pessoa, HttpStatus.OK);
+    public PessoaDTO getPessoaById(@PathVariable Long id) {
+        return pessoaService.getById(id);
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> createPessoa(@Valid @RequestBody PessoaDTO pessoaDTO) {
-    Pessoa pessoa = pessoaService.convertToEntity(pessoaDTO);
-    Pessoa savedPessoa = pessoaService.save(pessoa);
-    return new ResponseEntity<>(savedPessoa, HttpStatus.CREATED);
+    public ResponseEntity<PessoaDTO> createPessoa(@Valid @RequestBody PessoaDTO pessoaDTO) {
+        return new ResponseEntity<>(pessoaService.create(pessoaDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pessoa> updatePessoa(@PathVariable Long id, @Valid @RequestBody PessoaDTO pessoaDTO) {
-        Pessoa pessoa = pessoaService.convertToEntity(pessoaDTO);
-        pessoa.setId(id);
-        Pessoa updatedPessoa = pessoaService.save(pessoa);
-        return new ResponseEntity<>(updatedPessoa, HttpStatus.OK);
+    public PessoaDTO updatePessoa(@PathVariable Long id, @Valid @RequestBody PessoaDTO pessoaDTO) {
+        return pessoaService.update(id, pessoaDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePessoa(@PathVariable Long id) {
         pessoaService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

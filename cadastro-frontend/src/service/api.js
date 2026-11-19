@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api'; 
+// Set REACT_APP_API_URL (e.g. on Vercel) to point the app at the deployed backend.
+export const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
 
 const fetchAllPessoas = () => {
     return axios.get(`${API_URL}/pessoas`);
