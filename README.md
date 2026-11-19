@@ -45,7 +45,7 @@ Prerequisites: Java 17, Maven (or the Maven wrapper), Node.js/npm, and a Postgre
 
    ```bash
    cd cadastro-frontend
-   npm ci --legacy-peer-deps
+   npm ci
    npm start
    ```
 
